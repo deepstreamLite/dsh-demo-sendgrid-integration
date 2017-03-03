@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Password Reset Form</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/deepstream.io-client-js/2.1.1/deepstream.js"></script>
+
+</head>
+<body>
+
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+
+    <form>
+      <div class="form-group">
+        <label for="name">Email</label>
+        <input type="email" class="form-control" id="name" placeholder="xxx@yyy.com">
+      </div>
+      <button onclick="return resetPassword()" class="btn btn-default">Submit</button>
+    </form>
+
+  </div>
+  <div class="col-md-4"></div>
+</div>
+
+</body>
+<script>
+const client = deepstream('<Your app URL>')
+client.login()
+
+function resetPassword() {
+  const email = document.getElementById('name').email
+  client.rpc.make('password-reset', email, (error, result) => {
+    let msg
+    if (error) {
+      msg = `An error occurred while sending the password reset email:${error}`
+    } else {
+      msg = `Password reset email sent successfully, please check your inbox`
+    }
+    alert(msg)
+  })
+  return false
+}
+
+</script>
+</html>
